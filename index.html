@@ -22,9 +22,34 @@
         <script>
             url="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7M2BoNqy0E7sIsT1c51CnFVO5bjx3Bcvmz-TtSc2iSGAxzALtgT-RuFSrnBzyFKVCl_nDkMzSNDfC/pub?gid=2127907330&single=true&output=csv";
 
-            data=Papa.parse(url, {
+            function getCSV(func,url) {
+        var rawFile = new XMLHttpRequest();
+        var allText;
+
+        rawFile.open("GET", url, false);
+        rawFile.onreadystatechange = function () {
+            if(rawFile.readyState === 4)
+                if(rawFile.status === 200 || rawFile.status == 0)
+                    allText = rawFile.responseText;
+                    if(func!=undefined && typeof(func) == "function"){
+                        func(allText);
+                     }
+        };
+
+        rawFile.send();
+
+
+}
+
+
+getCSV(function(contents){
+  alert(contents);
+},url);
+
+         /*   data=Papa.parse(url, {
                             download: true
                         });
             console.log(data);
+           */
         </script>
 </html>
